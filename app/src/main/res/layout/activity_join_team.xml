@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.ayoung.frdetector.JoinTeamActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_gravity="top"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="0dp"
+        android:id="@+id/linearLayout2">
+
+        <Button
+            android:id="@+id/logo"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:onClick="onLogoClicked"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="FRDetector" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/darker_gray"
+        android:gravity="center_vertical|center_horizontal"
+        android:padding="10dp"
+        android:text="팀참여"
+        android:textColor="@android:color/background_light"
+        android:textSize="@dimen/activity_horizontal_margin"
+        android:textStyle="bold"
+        android:layout_below="@+id/linearLayout2"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:id="@+id/join_teamcode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/textView"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="53dp"
+        android:ems="10"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/join_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/join_teamcode"
+        android:layout_below="@+id/join_teamcode"
+        android:layout_marginTop="13dp"
+        android:ems="10"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/joint_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/join_name"
+        android:layout_below="@+id/join_name"
+        android:layout_marginTop="14dp"
+        android:ems="10"
+        android:inputType="phone" />
+
+    <TextView
+        android:id="@+id/join_textteamcode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/join_name"
+        android:layout_alignTop="@+id/join_teamcode"
+        android:layout_toStartOf="@+id/join_teamcode"
+        android:gravity="right|center_vertical"
+        android:text="팀플코드" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/joint_number"
+        android:layout_alignStart="@+id/join_textteamcode"
+        android:layout_alignTop="@+id/join_name"
+        android:gravity="right|center_vertical"
+        android:text="이름"
+        android:layout_toStartOf="@+id/join_name" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/joint_number"
+        android:layout_alignEnd="@+id/textView8"
+        android:layout_alignStart="@+id/textView8"
+        android:layout_alignTop="@+id/joint_number"
+        android:gravity="right|center_vertical"
+        android:text="번호" />
+
+    <Button
+        android:id="@+id/join_done"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="82dp"
+        android:onClick="onJoinDoneClicked"
+        android:text="완료" />
+
+</RelativeLayout>
