@@ -4,76 +4,60 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.ayoung.frdetector.EvaluationResultActivity">
+    tools:context="com.example.ayoung.frdetector.FuncActivity">
 
     <LinearLayout
-        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="top"
         android:orientation="horizontal"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="0dp"
+        android:id="@+id/linearLayout6"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true">
 
         <Button
             android:id="@+id/logo"
-            android:layout_width="57dp"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@android:color/transparent"
+            android:layout_weight="10"
             android:onClick="onLogoClicked"
             android:text="FRD" />
 
         <TextView
-            android:id="@+id/teamname"
-            android:layout_width="wrap_content"
+            android:id="@+id/projectname"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="16.16"
-            android:gravity="center_vertical|center_horizontal"
-            android:text="팀명"
-            android:textSize="@dimen/activity_horizontal_margin"
-            android:textStyle="bold" />
+            android:layout_weight="5"
+            android:gravity="center"
+            android:text="TextView" />
 
         <ImageButton
-            android:id="@+id/imageButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:id="@+id/info"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="10"
             android:background="@android:color/transparent"
-            app:srcCompat="@mipmap/ic_launcher" />
+            android:onClick="onInfoClicked"
+            app:srcCompat="@mipmap/info" />
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/text_attendance"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/linearLayout2"
-        android:background="@android:color/darker_gray"
-        android:gravity="center_vertical|center_horizontal"
-        android:padding="10dp"
-        android:text="개별평가"
-        android:textColor="@android:color/background_light"
-        android:textSize="@dimen/activity_horizontal_margin"
-        android:textStyle="bold" />
-
     <FrameLayout
+        android:id="@+id/frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/text_attendance"
-        android:layout_above="@+id/linearLayout3">
+        android:layout_above="@+id/linearLayout7"
+        android:layout_below="@+id/linearLayout6">
 
     </FrameLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:orientation="horizontal"
-        android:id="@+id/linearLayout3">
+        android:id="@+id/linearLayout7">
 
         <Button
             android:id="@+id/feed"
@@ -111,11 +95,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@android:color/black"
             android:onClick="onEvaluationClicked"
             android:text="평가"
-            android:textColor="@android:color/white"
             android:textStyle="bold" />
+
     </LinearLayout>
 
 </RelativeLayout>

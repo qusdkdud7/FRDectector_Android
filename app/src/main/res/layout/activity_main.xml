@@ -31,20 +31,15 @@
                 android:paddingRight="10dp"
                 android:text="FRDetector" />
 
-            <Button
-                android:id="@+id/testbutton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Button" />
-
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/teamlistview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
+            android:layout_above="@+id/linearLayout"
             android:layout_below="@+id/linearLayout5"
-            android:layout_above="@+id/linearLayout">
+            android:orientation="vertical">
 
         </LinearLayout>
 

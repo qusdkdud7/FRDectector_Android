@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "392334083555",
+    "firebase_url": "https://frdetector.firebaseio.com",
+    "project_id": "frdetector",
+    "storage_bucket": "frdetector.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:392334083555:android:71c9be716e5fbd44",
+        "android_client_info": {
+          "package_name": "com.example.ayoung.frdetector"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "392334083555-135uond19mm0j6itcbh4iij9u5hug8b0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxYIMXrXL8NAMuw9wzo7cnVftCskAf5Ss"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

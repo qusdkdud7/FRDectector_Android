@@ -18,10 +18,7 @@
         </activity>
         <activity android:name=".JoinTeamActivity" />
         <activity android:name=".CreateTeamActivity" />
-        <activity android:name=".EvaluationResultActivity" />
-        <activity android:name=".FeedActivity" />
-        <activity android:name=".TaskActivity" />
-        <activity android:name=".AttendanceActivity"></activity>
+        <activity android:name=".FuncActivity" />
     </application>
 
 </manifest>
