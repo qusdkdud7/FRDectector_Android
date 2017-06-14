@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
         for(int i=0;i<personalteams.size();i++){
             final Team t = personalteams.get(i);
+            final int teamnum = i;
             Button button = new Button(this);
             button.setGravity(0);
             button.setText("팀이름: " + t.teamname + "\n팀플코드: " + t.teamcode + "\n조장: " + t.persons.get(0).name);
@@ -63,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     Intent intent = new Intent(getApplicationContext(), FuncActivity.class);
                     intent.putExtra("team", (Serializable) t);
+                    intent.putExtra("teamNum",teamnum);
                     startActivity(intent);
                 }
             });

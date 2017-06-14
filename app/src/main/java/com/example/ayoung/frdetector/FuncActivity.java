@@ -3,31 +3,35 @@ package com.example.ayoung.frdetector;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Random;
+import java.util.Date;
 
-public class FuncActivity extends AppCompatActivity {
+public class FuncActivity extends AppCompatActivity{
 
     private DatabaseReference myRef;
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,9 +51,6 @@ public class FuncActivity extends AppCompatActivity {
                 showInfo(team);
             }
         });
-
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        myRef = database.getReference("Feed");
 
         Button feed = (Button)findViewById(R.id.feed);
         feed.setOnClickListener(new Button.OnClickListener(){
@@ -79,46 +80,61 @@ public class FuncActivity extends AppCompatActivity {
             }
         });
         changeView("feed");
-/*
-        final Button attendCheck = (Button)findViewById(R.id.attendCheckBtn);
-        attendCheck.setOnClickListener(new View.OnClickListener() {
+
+///////////Feed Layout/////////////
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        myRef = database.getReference("Feed");
+
+        ListView listView = (ListView) findViewById(R.id.feedview);
+        final EditText editText = (EditText) findViewById(R.id.txtMsg);
+        Button sendButton = (Button) findViewById(R.id.msgSendBtn);
+
+        final ArrayAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, android.R.id.text1);
+        listView.setAdapter(adapter);
+
+        sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(attendCheck.getText().equals("출석체크")){
-                    //TODO: 조장이 출석체크 할 수 있는 view로 바꿔주기, 출석현황 저장
-                    attendCheck.setText("완료");
-                }
-                else{
-                    //TODO: 저장된 출석현황 보여주기
-                    attendCheck.setText("출석체크");
-                }
-            }
-        });*/
-        //showFeed();
+                long now = System.currentTimeMillis();
+                Date date = new Date(now);
+                SimpleDateFormat sdf = new SimpleDateFormat("a HH:mm:ss");
+                String formatDate = sdf.format(date);
 
-    }
-    private void showFeed() {
-        LinearLayout feedview = (LinearLayout)findViewById(R.id.feed);
-        final EditText txtMsg = (EditText) findViewById(R.id.txtMsg);
-        Button msgSendBtn = (Button) findViewById(R.id.msgSendBtn);
-
-        final String userName = "user" + new Random().nextInt(10000);  // 유저이름 설정 바꾸기
-
-        msgSendBtn.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                String message = txtMsg.getText().toString();
-                if (!TextUtils.isEmpty(message)) {
-                    txtMsg.setText("");
-                    FeedData feedData = new FeedData();
-                    feedData.pName = userName;
-                    feedData.message = message;
-                    feedData.time = System.currentTimeMillis();
-                    myRef.push().child("feed").setValue(feedData);
-                }
+                FeedData feedData = new FeedData("testuser",editText.getText().toString(),formatDate);
+                myRef.child("feed").push().setValue(feedData);
+                editText.setText("");
             }
         });
+        myRef.child("feed").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                FeedData feedData = dataSnapshot.getValue(FeedData.class);
+                adapter.add(feedData.pName+"\n"+feedData.message+"\n"+feedData.time);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
     }
+
 
     private void changeView(String view){
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -167,6 +183,8 @@ public class FuncActivity extends AppCompatActivity {
         AlertDialog dialog = builder.create();
         dialog.show();
     }
+
+
 
 
 }

@@ -6,13 +6,14 @@ package com.example.ayoung.frdetector;
 public class FeedData {
     String pName;
     String message;
-    long time;
+    String time;
 
     public FeedData() {
     }
 
-    public FeedData(String pName, String message) {
+    public FeedData(String pName, String message, String time) {
         this.pName = pName;
         this.message = message;
+        this.time = time;
     }
 }
