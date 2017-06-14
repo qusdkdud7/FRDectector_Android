@@ -25,29 +25,15 @@
             android:textStyle="bold" />
     </LinearLayout>
 
-    <TableLayout
+    <FrameLayout
+        android:id="@+id/attendFrameview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/linearLayout10"
         android:layout_below="@+id/linearLayout3"
         android:layout_margin="10dp">
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </TableLayout>
+    </FrameLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"

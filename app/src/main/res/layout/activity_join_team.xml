@@ -44,7 +44,7 @@
         android:layout_alignParentStart="true" />
 
     <EditText
-        android:id="@+id/join_teamcode"
+        android:id="@+id/jointeamcode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -52,24 +52,24 @@
         android:layout_marginEnd="30dp"
         android:layout_marginTop="53dp"
         android:ems="10"
-        android:inputType="number" />
+        android:inputType="text" />
 
     <EditText
-        android:id="@+id/join_name"
+        android:id="@+id/joinname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/join_teamcode"
-        android:layout_below="@+id/join_teamcode"
+        android:layout_alignEnd="@+id/jointeamcode"
+        android:layout_below="@+id/jointeamcode"
         android:layout_marginTop="13dp"
         android:ems="10"
         android:inputType="textPersonName" />
 
     <EditText
-        android:id="@+id/joint_number"
+        android:id="@+id/joinnumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/join_name"
-        android:layout_below="@+id/join_name"
+        android:layout_alignEnd="@+id/joinname"
+        android:layout_below="@+id/joinname"
         android:layout_marginTop="14dp"
         android:ems="10"
         android:inputType="phone" />
@@ -78,9 +78,9 @@
         android:id="@+id/join_textteamcode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/join_name"
-        android:layout_alignTop="@+id/join_teamcode"
-        android:layout_toStartOf="@+id/join_teamcode"
+        android:layout_above="@+id/joinname"
+        android:layout_alignTop="@+id/jointeamcode"
+        android:layout_toStartOf="@+id/jointeamcode"
         android:gravity="right|center_vertical"
         android:text="팀플코드" />
 
@@ -88,21 +88,21 @@
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/joint_number"
+        android:layout_above="@+id/joinnumber"
         android:layout_alignStart="@+id/join_textteamcode"
-        android:layout_alignTop="@+id/join_name"
+        android:layout_alignTop="@+id/joinname"
         android:gravity="right|center_vertical"
         android:text="이름"
-        android:layout_toStartOf="@+id/join_name" />
+        android:layout_toStartOf="@+id/joinname" />
 
     <TextView
         android:id="@+id/textView9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/joint_number"
+        android:layout_alignBottom="@+id/joinnumber"
         android:layout_alignEnd="@+id/textView8"
         android:layout_alignStart="@+id/textView8"
-        android:layout_alignTop="@+id/joint_number"
+        android:layout_alignTop="@+id/joinnumber"
         android:gravity="right|center_vertical"
         android:text="번호" />
 

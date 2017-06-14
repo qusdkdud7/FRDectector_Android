@@ -95,7 +95,6 @@ public class JoinTeamActivity extends AppCompatActivity {
         final Person person = new Person(name.getText().toString(),number.getText().toString());
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            //TODO: 조장 이름만 나오게 수정 => HashMap cast Person못함 .name하니 오류
         builder.setMessage("팀플이름: "+team.teamname+"\n팀플코드: "+team.teamcode+"\n조장: "+p.name+"\n참여하시겠습니까?");
         builder.setPositiveButton("확인", new DialogInterface.OnClickListener(){
             public void onClick(DialogInterface dialog,int whichButton){

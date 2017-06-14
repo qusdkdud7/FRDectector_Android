@@ -47,9 +47,9 @@
         android:id="@+id/create_textteamname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/create_teamname"
-        android:layout_alignTop="@+id/create_teamname"
-        android:layout_toStartOf="@+id/create_teamname"
+        android:layout_alignBottom="@+id/createteamname"
+        android:layout_alignTop="@+id/createteamname"
+        android:layout_toStartOf="@+id/createteamname"
         android:gravity="right|center_vertical"
         android:text="팀플이름" />
 
@@ -57,63 +57,53 @@
         android:id="@+id/create_textnumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/create_number"
-        android:layout_alignTop="@+id/create_number"
+        android:layout_alignBottom="@+id/createnumber"
+        android:layout_alignTop="@+id/createnumber"
         android:gravity="right|center_vertical"
         android:text="번호"
         android:layout_alignStart="@+id/create_textteamname"
-        android:layout_toStartOf="@+id/create_number" />
+        android:layout_toStartOf="@+id/createnumber" />
 
     <TextView
         android:id="@+id/create_textname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/create_name"
+        android:layout_alignBottom="@+id/createname"
         android:gravity="right|center_vertical"
         android:text="이름"
-        android:layout_alignTop="@+id/create_name"
+        android:layout_alignTop="@+id/createname"
         android:layout_alignStart="@+id/create_textteamname"
-        android:layout_toStartOf="@+id/create_name" />
+        android:layout_toStartOf="@+id/createname" />
 
     <EditText
-        android:id="@+id/create_teamname"
+        android:id="@+id/createteamname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:layout_marginEnd="35dp"
-        android:layout_above="@+id/create_name"
+        android:layout_above="@+id/createname"
         android:layout_alignEnd="@+id/create_done"
-        android:layout_marginBottom="7dp" />
+        android:layout_marginBottom="7dp"
+        android:layout_marginEnd="35dp"
+        android:ems="10"
+        android:inputType="text" />
 
     <EditText
-        android:id="@+id/create_name"
+        android:id="@+id/createname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
         android:layout_marginBottom="10dp"
-        android:layout_above="@+id/create_number"
+        android:layout_above="@+id/createnumber"
         android:layout_toEndOf="@+id/create_textteamname" />
 
     <EditText
-        android:id="@+id/create_number"
+        android:id="@+id/createnumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
         android:layout_centerVertical="true"
-        android:layout_toEndOf="@+id/create_textname" />
-
-    <Button
-        android:id="@+id/create_check"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="onCreateCheckClicked"
-        android:text="확인"
-        android:layout_below="@+id/create_number"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="37dp" />
+        android:layout_toEndOf="@+id/create_textname"
+        android:ems="10"
+        android:inputType="phone" />
 
     <Button
         android:id="@+id/create_done"
@@ -121,9 +111,19 @@
         android:layout_height="wrap_content"
         android:onClick="onCreateDoneClicked"
         android:text="완료"
-        android:layout_below="@+id/create_check"
-        android:layout_toEndOf="@+id/create_check"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="43dp" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="28dp" />
+
+    <Button
+        android:id="@+id/createCheckBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/create_done"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="51dp"
+        android:onClick="onCreateCheckBtnClicked"
+        android:text="확인" />
 
 </RelativeLayout>

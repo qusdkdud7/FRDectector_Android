@@ -20,5 +20,5 @@
         <activity android:name=".CreateTeamActivity" />
         <activity android:name=".FuncActivity" />
     </application>
-
+    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>
