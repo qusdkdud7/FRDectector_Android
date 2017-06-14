@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -20,7 +21,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
-    private DatabaseReference Ref;
+    private DatabaseReference myRef;
     final ArrayList<Team> personalteams = new ArrayList<Team>();
 
     @Override
@@ -46,13 +47,12 @@ public class MainActivity extends AppCompatActivity {
         testt2.addPerson(testp2);
         testt2.addPerson(testp1);
 
-        personalteams.add(testt1);personalteams.add(testt2);
-
-        ArrayList<Button> btns = new ArrayList<Button>();
+        personalteams.add(testt1);
+        personalteams.add(testt2);
 
         final LinearLayout teamlistview = (LinearLayout) findViewById(R.id.teamlistview);
 
-        for(int i=0;i<personalteams.size();i++){
+        for (int i = 0; i < personalteams.size(); i++) {
             final Team t = personalteams.get(i);
             final int teamnum = i;
             Button button = new Button(this);
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     Intent intent = new Intent(getApplicationContext(), FuncActivity.class);
                     intent.putExtra("team", (Serializable) t);
-                    intent.putExtra("teamNum",teamnum);
+                    intent.putExtra("teamNum", teamnum);
                     startActivity(intent);
                 }
             });
@@ -92,28 +92,19 @@ public class MainActivity extends AppCompatActivity {
         final LinearLayout teamlistview = (LinearLayout) findViewById(R.id.teamlistview);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        Ref = database.getReference("teams/teamlist");
+        myRef = database.getReference("teams/person-teams/" + s);
 
-        Ref.addValueEventListener(new ValueEventListener() {
+        myRef.addValueEventListener(new ValueEventListener() {
             public void onDataChange(DataSnapshot dataSnapshot) {
-                try{
-                    Map<String,Object> v = (Map<String,Object>)dataSnapshot.getValue();
-                    for(Map.Entry<String,Object> e:v.entrySet()) {
+                try {
+                    Map<String, Object> v = (Map<String, Object>) dataSnapshot.getValue();
+                    for (Map.Entry<String, Object> e : v.entrySet()) {
                         Team t = new Team();
                         t.fromMap((Map<String, Object>) e.getValue());
-                        Button button = new Button(MainActivity.this);
-                        button.setText("팀이름: "+t.teamname+"\n팀플코드: "+t.teamcode+"\n조장: "+t.persons.get(0).name);
-                        teamlistview.addView(button, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-                        button.setOnClickListener(new View.OnClickListener(){
-                            @Override
-                            public void onClick(View view) {
-                                Intent intent = new Intent(getApplicationContext(), FuncActivity.class);
-                                startActivity(intent);
-                            }
-                        });
+                        personalteams.add(t);
                     }
-                }catch(Exception e){
-                    Toast.makeText(MainActivity.this,"등록되어 있는 팀이 없습니다.",Toast.LENGTH_LONG).show();
+                } catch (Exception e) {
+                    Toast.makeText(MainActivity.this, "등록되어 있는 팀이 없습니다.", Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -122,6 +113,24 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Failed to read value.", Toast.LENGTH_SHORT).show();
             }
         });
-    }
 
+        for (int i = 0; i < personalteams.size(); i++) {
+            final Team t = personalteams.get(i);
+            final int teamnum = i;
+            Button button = new Button(this);
+            button.setGravity(0);
+            button.setText("팀이름: " + t.teamname + "\n팀플코드: " + t.teamcode + "\n조장: " + t.persons.get(0).name);
+            teamlistview.addView(button, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getApplicationContext(), FuncActivity.class);
+                    intent.putExtra("team", (Serializable) t);
+                    intent.putExtra("teamNum", teamnum);
+                    startActivity(intent);
+                }
+            });
+        }
+
+    }
 }

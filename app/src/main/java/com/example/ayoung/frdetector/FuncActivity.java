@@ -31,15 +31,17 @@ import java.util.Date;
 public class FuncActivity extends AppCompatActivity{
 
     private DatabaseReference myRef;
-    
+    private int teamnum;
+    private Team team;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_func);
 
         Intent intent = getIntent();
-
-        final Team team = (Team)intent.getSerializableExtra("team");
+try {
+        team = (Team) intent.getSerializableExtra("team");
+        teamnum = intent.getIntExtra("teamNum",0);
 
         TextView projectname = (TextView)findViewById(R.id.projectname);
         projectname.setText(team.teamname);
@@ -56,6 +58,7 @@ public class FuncActivity extends AppCompatActivity{
         feed.setOnClickListener(new Button.OnClickListener(){
             public void onClick(View v){
                 changeView("feed");
+                showFeed();
             }
         });
 
@@ -82,56 +85,22 @@ public class FuncActivity extends AppCompatActivity{
         changeView("feed");
 
 ///////////Feed Layout/////////////
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        myRef = database.getReference("Feed");
+        showFeed();
+    }catch(Exception e){
+        Toast.makeText(FuncActivity.this,e.getMessage(),Toast.LENGTH_LONG).show();
+    }
 
-        ListView listView = (ListView) findViewById(R.id.feedview);
-        final EditText editText = (EditText) findViewById(R.id.txtMsg);
-        Button sendButton = (Button) findViewById(R.id.msgSendBtn);
+/////////////Task layout////////////////
 
-        final ArrayAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, android.R.id.text1);
-        listView.setAdapter(adapter);
 
-        sendButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                long now = System.currentTimeMillis();
-                Date date = new Date(now);
-                SimpleDateFormat sdf = new SimpleDateFormat("a HH:mm:ss");
-                String formatDate = sdf.format(date);
 
-                FeedData feedData = new FeedData("testuser",editText.getText().toString(),formatDate);
-                myRef.child("feed").push().setValue(feedData);
-                editText.setText("");
-            }
-        });
-        myRef.child("feed").addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                FeedData feedData = dataSnapshot.getValue(FeedData.class);
-                adapter.add(feedData.pName+"\n"+feedData.message+"\n"+feedData.time);
-            }
 
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+/////////////Attendance layout////////////////
 
-            }
 
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
 
-            }
 
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+/////////////Evlauation layout////////////////
 
     }
 
@@ -184,7 +153,58 @@ public class FuncActivity extends AppCompatActivity{
         dialog.show();
     }
 
+    public void showFeed(){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        myRef = database.getReference("Feed");
 
+        ListView listView = (ListView) findViewById(R.id.feedview);
+        final EditText editText = (EditText) findViewById(R.id.txtMsg);
+        Button sendButton = (Button) findViewById(R.id.msgSendBtn);
+
+        final ArrayAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, android.R.id.text1);
+        listView.setAdapter(adapter);
+
+        sendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                long now = System.currentTimeMillis();
+                Date date = new Date(now);
+                SimpleDateFormat sdf = new SimpleDateFormat("a HH:mm:ss");
+                String formatDate = sdf.format(date);
+
+                FeedData feedData = new FeedData("testuser",editText.getText().toString(),formatDate);
+                myRef.child("feed"+teamnum).push().setValue(feedData);
+                editText.setText("");
+            }
+        });
+        myRef.child("feed"+teamnum).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                FeedData feedData = dataSnapshot.getValue(FeedData.class);
+                adapter.add(feedData.pName+"\n"+feedData.message+"\n"+feedData.time);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
 
 
 }
