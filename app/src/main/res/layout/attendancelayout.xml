@@ -47,11 +47,11 @@
 
         <Button
             android:id="@+id/attendCheckBtn"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:onClick="onAttendCheckBtnClicked"
             android:text="출석체크" />
+
     </LinearLayout>
 
 </RelativeLayout>

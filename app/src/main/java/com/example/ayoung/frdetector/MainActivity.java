@@ -1,9 +1,11 @@
 package com.example.ayoung.frdetector;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.view.accessibility.AccessibilityManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -49,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
 
         personalteams.add(testt1);
         personalteams.add(testt2);
+
+      //  showTeam("배진영01012345678");
 
         final LinearLayout teamlistview = (LinearLayout) findViewById(R.id.teamlistview);
 

@@ -7,21 +7,22 @@
     tools:context="com.example.ayoung.frdetector.FuncActivity">
 
     <LinearLayout
+        android:id="@+id/linearLayout6"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:id="@+id/linearLayout6"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true">
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/logo"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="60dp"
             android:layout_weight="10"
             android:onClick="onLogoClicked"
-            android:text="FRD" />
+            android:text="FRD"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/projectname"
@@ -29,7 +30,8 @@
             android:layout_height="match_parent"
             android:layout_weight="5"
             android:gravity="center"
-            android:text="TextView" />
+            android:text="TextView"
+            android:textSize="18sp" />
 
         <ImageButton
             android:id="@+id/info"
@@ -41,12 +43,29 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_weight="10"
+        android:orientation="horizontal"
+        android:layout_below="@+id/linearLayout6"
+        android:id="@+id/linearLayout9">
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@android:color/background_dark" />
+    </LinearLayout>
+
     <FrameLayout
         android:id="@+id/frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/linearLayout7"
-        android:layout_below="@+id/linearLayout6">
+        android:layout_below="@+id/linearLayout9">
 
     </FrameLayout>
 

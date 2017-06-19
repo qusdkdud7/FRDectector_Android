@@ -20,12 +20,13 @@
         <Button
             android:id="@+id/logo"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="60dp"
             android:background="@android:color/transparent"
             android:onClick="onLogoClicked"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:text="FRDetector" />
+            android:text="FRDetector"
+            android:textSize="18sp" />
 
     </LinearLayout>
 
