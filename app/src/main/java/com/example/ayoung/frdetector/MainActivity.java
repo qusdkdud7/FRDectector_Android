@@ -31,55 +31,35 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Person testp1 = new Person("박지훈", "01000000000");
-        Person testp2 = new Person("라이관린", "01012345678");
-        Person testp3 = new Person("유선호", "01087654321");
-        Person testp4 = new Person("배진영", "01011111111");
+        Person testp1 = new Person("홍길동", "01000000000");
+        Person testp2 = new Person("김철수", "01012345678");
+        Person testp3 = new Person("박영희", "01087654321");
+        Person testp4 = new Person("강민수", "01011111111");
+        Person testp5 = new Person("최미영", "01022222222");
 
-        Team testt1 = new Team("프로듀스101");
-        Team testt2 = new Team("프로듀스101 시즌2");
+        Team testt1 = new Team("테스트팀1");
+        Team testt2 = new Team("테스트팀2");
         testt1.teamcode = "ASDFGHJKL";
         testt2.teamcode = "LKJHGFDSA";
         testt1.addPerson(testp1);
         testt1.addPerson(testp2);
         testt1.addPerson(testp3);
         testt1.addPerson(testp4);
-        testt2.addPerson(testp4);
+        testt2.addPerson(testp5);
         testt2.addPerson(testp3);
         testt2.addPerson(testp2);
         testt2.addPerson(testp1);
 
         personalteams.add(testt1);
         personalteams.add(testt2);
-
-      //  showTeam("배진영01012345678");
-
-        final LinearLayout teamlistview = (LinearLayout) findViewById(R.id.teamlistview);
-
-        for (int i = 0; i < personalteams.size(); i++) {
-            final Team t = personalteams.get(i);
-            final int teamnum = i;
-            Button button = new Button(this);
-            button.setGravity(0);
-            button.setText("팀이름: " + t.teamname + "\n팀플코드: " + t.teamcode + "\n조장: " + t.persons.get(0).name);
-            teamlistview.addView(button, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(getApplicationContext(), FuncActivity.class);
-                    intent.putExtra("team", (Serializable) t);
-                    intent.putExtra("teamNum", teamnum);
-                    startActivity(intent);
-                }
-            });
-        }
-
+        showTeam();
 
     }
 
     public void onLogoClicked(View v) {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);
+
     }
 
     public void onCreateTeamClicked(View v) {
@@ -92,11 +72,11 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void showTeam(String s) {
+    public void showTeam() {
         final LinearLayout teamlistview = (LinearLayout) findViewById(R.id.teamlistview);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        myRef = database.getReference("teams/person-teams/" + s);
+        myRef = database.getReference("teams/person-teams/강땡땡0000");
 
         myRef.addValueEventListener(new ValueEventListener() {
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -108,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
                         personalteams.add(t);
                     }
                 } catch (Exception e) {
-                    Toast.makeText(MainActivity.this, "등록되어 있는 팀이 없습니다.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -120,7 +100,6 @@ public class MainActivity extends AppCompatActivity {
 
         for (int i = 0; i < personalteams.size(); i++) {
             final Team t = personalteams.get(i);
-            final int teamnum = i;
             Button button = new Button(this);
             button.setGravity(0);
             button.setText("팀이름: " + t.teamname + "\n팀플코드: " + t.teamcode + "\n조장: " + t.persons.get(0).name);
@@ -130,7 +109,6 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     Intent intent = new Intent(getApplicationContext(), FuncActivity.class);
                     intent.putExtra("team", (Serializable) t);
-                    intent.putExtra("teamNum", teamnum);
                     startActivity(intent);
                 }
             });

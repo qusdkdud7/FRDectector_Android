@@ -4,9 +4,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 
+import android.graphics.Paint;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -16,6 +18,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -25,15 +29,21 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.StringTokenizer;
+import java.util.concurrent.ExecutionException;
+
+import static com.example.ayoung.frdetector.R.id.center;
 
 public class FuncActivity extends AppCompatActivity {
 
     private DatabaseReference myRef;
-    private int teamnum;
     private Team team;
 
 
@@ -49,12 +59,11 @@ public class FuncActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         team = (Team) intent.getSerializableExtra("team");
-        teamnum = intent.getIntExtra("teamNum", 0);
 
         TextView projectname = (TextView) findViewById(R.id.projectname);
         projectname.setText(team.teamname);
 
-        ImageButton info = (ImageButton) findViewById(R.id.info);
+        final ImageButton info = (ImageButton) findViewById(R.id.info);
         info.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,23 +84,51 @@ public class FuncActivity extends AppCompatActivity {
             public void onClick(View v) {
                 changeView("task");
 
+                final LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                final LinearLayout tasklist = (LinearLayout)findViewById(R.id.tasklist);
 
-                LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-                LinearLayout tasklist = (LinearLayout) findViewById(R.id.tasklist);
-                inflater.inflate(R.layout.task, tasklist, true);
+                View view = inflater.inflate(R.layout.task,null);
+                EditText taskname = (EditText)view.findViewById(R.id.taskname);
+                Button TaskUpdateBtn = (Button)view.findViewById(R.id.TaskUpdateBtn);
+                TaskUpdateBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        View view = inflater.inflate(R.layout.task,null);
+                        final EditText taskname = (EditText)view.findViewById(R.id.taskname);
+                        final Button TaskUpdateBtn = (Button)view.findViewById(R.id.TaskUpdateBtn);
+                        tasklist.addView(view);
 
-                taskUpdate();
+                        LayoutInflater pinflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+                        LinearLayout ptask = (LinearLayout) findViewById(R.id.taskpersonview);
+
+                        if (TaskUpdateBtn.getText().equals("+")) {
+                            TaskUpdateBtn.setText("-");
+                            myRef.child(team.teamcode).push().child(taskname.getText().toString());
+                            ptask.addView(pinflater.inflate(R.layout.taskperson, ptask, false));
+                            addpersonview(taskname.getText().toString());
+
+                            //TODO: TaskPersonView Update
+
+
+                        } else {
+                            TaskUpdateBtn.setText("+");
+
+                            ptask.removeViewAt(0);
+                            //TODO: Task Delete
+                        }
+
+                    }
+                });
+
+                tasklist.addView(view);
+
+
+
+                //taskUpdate();
 
 
 
 
-            }
-        });
-
-        final Button evaluation = (Button) findViewById(R.id.evaluation);
-        evaluation.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View v) {
-                changeView("evaluation");
             }
         });
 
@@ -100,9 +137,19 @@ public class FuncActivity extends AppCompatActivity {
             public void onClick(View v) {
                 changeView("attendance");
                 changeAttendView("result");
+                showAttendResult();
                 attendButton();
             }
         });
+
+        final Button evaluation = (Button) findViewById(R.id.evaluation);
+        evaluation.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View v) {
+                changeView("evaluation");
+                showEvaluation();
+            }
+        });
+
         changeView("feed");
         showFeed();
 
@@ -130,11 +177,11 @@ public class FuncActivity extends AppCompatActivity {
                 String formatDate = sdf.format(date);
 
                 FeedData feedData = new FeedData("testuser", editText.getText().toString(), formatDate);
-                myRef.child("feed" + teamnum).push().setValue(feedData);
+                myRef.child(team.teamcode).push().setValue(feedData);
                 editText.setText("");
             }
         });
-        myRef.child("feed" + teamnum).addChildEventListener(new ChildEventListener() {
+        myRef.child(team.teamcode).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 FeedData feedData = dataSnapshot.getValue(FeedData.class);
@@ -166,41 +213,9 @@ public class FuncActivity extends AppCompatActivity {
 
     //////////////Task Function///////////////////
 
-    private void taskUpdate() {
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        myRef = database.getReference("Task");
-
-        final EditText taskname = (EditText)findViewById(R.id.taskname);
-
-        final Button TaskUpdate = (Button) findViewById(R.id.TaskUpdateBtn);
-        TaskUpdate.setOnClickListener(new Button.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LayoutInflater pinflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-                LinearLayout ptask = (LinearLayout) findViewById(R.id.taskpersonview);
-
-                if (TaskUpdate.getText().equals("+")) {
-                    TaskUpdate.setText("-");
-                    myRef.child("task" + teamnum).push().setValue(taskname.getText().toString());
-                    ptask.addView(pinflater.inflate(R.layout.taskperson, ptask, false));
-                    addpersonview();
-
-                    //TODO: TaskPersonView Update
 
 
-                } else {
-                    TaskUpdate.setText("+");
-                    myRef.child("task" + teamnum+"/"+taskname.getText().toString()).removeValue();
-                    ptask.removeViewAt(0);
-                    //TODO: Task Delete
-                }
-
-            }
-        });
-    }
-
-
-    private void addpersonview(){
+    private void addpersonview(String taskname){
 
         final ImageButton taskdateBtn = (ImageButton) findViewById(R.id.taskdateBtn);
         taskdateBtn.setOnClickListener(new ImageButton.OnClickListener() {
@@ -238,12 +253,14 @@ public class FuncActivity extends AppCompatActivity {
                     attendBtn.setText("완료");
                     changeAttendView("check");
 
-                        addAttendCheckView();
+                    addAttendCheckView();
 
                     //TODO: Save team attendance result
                 } else {
                     attendBtn.setText("출석체크");
+                    saveattendance();
                     changeAttendView("result");
+                    showAttendResult();
                     //TODO: Show team attendance result
                 }
             }catch(Exception e){
@@ -251,6 +268,30 @@ public class FuncActivity extends AppCompatActivity {
             }
             }
         });
+    }
+
+    private void showAttendResult(){
+        LinearLayout linearLayout = (LinearLayout)findViewById(R.id.attendresultlayout);
+        TableRow namerow = new TableRow(this);
+        TextView t = new TextView(this);
+        t.setText("날짜");
+        namerow.addView(t);
+        for(int i=0;i<team.persons.size();i++){
+            TextView name = new TextView(this);
+            namerow.addView(name);
+        }
+
+
+    }
+
+    private void saveattendance(){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        myRef = database.getReference("Attendance");
+
+        EditText attendanceDate = (EditText)findViewById(R.id.attendanceDate);
+
+        myRef.child("attend" + team.teamcode+"/"+attendanceDate.getText().toString()+"/yes").push().setValue(attendPersons);
+        myRef.child("attend" + team.teamcode+"/"+attendanceDate.getText().toString()+"/no").push().setValue(NotattendPersons);
     }
 
     private void addAttendCheckView(){
@@ -315,7 +356,65 @@ public class FuncActivity extends AppCompatActivity {
 
     }
 
-//////////////Evaluation Function///////////////////
+    //////////////Evaluation Function///////////////////
+    private void showEvaluation() {
+        final TableLayout tableLayout = (TableLayout) findViewById(R.id.attendTL);
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        myRef = database.getReference("Evaluation/" + team.teamcode);
+
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                try {
+                    Map<String, Object> v = (Map<String, Object>) dataSnapshot.getValue();
+                    for (Map.Entry<String, Object> e : v.entrySet()) {
+                        Eval eval = new Eval();
+                        eval.fromMap((Map<String, Object>) e.getValue());
+
+                        TableRow tbr = new TableRow(FuncActivity.this);
+                        tableLayout.addView(tbr, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+
+                        TextView name = new TextView(FuncActivity.this);
+                        TextView task = new TextView(FuncActivity.this);
+                        TextView attend = new TextView(FuncActivity.this);
+                        TextView res = new TextView(FuncActivity.this);
+
+                        name.setText(eval.name);
+                        name.setGravity(Gravity.CENTER);
+                        name.setPadding(10,10,10,10);
+                        name.setPaintFlags(Paint.FAKE_BOLD_TEXT_FLAG);
+                        task.setText(eval.task);
+                        task.setGravity(Gravity.RIGHT);
+                        task.setPadding(10,10,10,10);
+                        attend.setText(Double.parseDouble(eval.attend) * 100 + "%");
+                        attend.setGravity(Gravity.RIGHT);
+                        attend.setPadding(10,10,10,10);
+                        res.setText((Double.parseDouble(eval.task) + Double.parseDouble(eval.attend) * 5) + "/10");
+                        res.setGravity(Gravity.RIGHT);
+                        res.setPadding(10,10,10,10);
+
+                        tbr.addView(name, new TableRow.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT,1));
+                        tbr.addView(task, new TableRow.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT,1));
+                        tbr.addView(attend, new TableRow.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT,1));
+                        tbr.addView(res, new TableRow.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT,1));
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(FuncActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+
+        });
+    }
+
+
+
+
 
 
     private void changeAttendView(String s) {
