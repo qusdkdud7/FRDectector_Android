@@ -1,35 +1,35 @@
 package com.example.ayoung.frdetector;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Created by AYoung on 2017-06-22.
  */
-public class Eval {
+public class TaskData {
+    String taskname;
     String name;
-    String number;
-    String task;
-    String attend;
+    String star;
+    String date;
 
-    public Eval() {
-        task = "0";
-        attend = "0";
+    public TaskData() {
     }
 
     public void fromMap(Map<String, Object> map) {
+        taskname = (String) map.get("taskname");
         name = (String) map.get("name");
-        number = (String) map.get("number");
-        task = (String) map.get("task");
-        attend = (String) map.get("attend");
+        star = (String) map.get("star");
+        date = (String) map.get("date");
+
     }
 
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
+        result.put("taskname", taskname);
         result.put("name", name);
-        result.put("number", number);
-        result.put("task", task);
-        result.put("attend", attend);
+        result.put("star", star);
+        result.put("date", date);
         return result;
     }
 }

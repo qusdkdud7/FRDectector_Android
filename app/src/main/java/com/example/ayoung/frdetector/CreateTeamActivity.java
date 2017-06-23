@@ -61,19 +61,8 @@ public class CreateTeamActivity extends AppCompatActivity {
         if(teamname.getText().toString().equals("") || name.getText().toString().equals("") || number.getText().toString().equals(""))
             Toast.makeText(this,"모두 입력한 후 완료해주세요.",Toast.LENGTH_LONG).show();
         else saveNewTeam(team);
-
-        //saveNewPerson(name.getText().toString(), number.getText().toString());
-
-
     }
-/*
-    private void saveNewPerson(String name, String number) {
 
-        Person leader = new Person(name, number);
-        myRef.child("persons").child(number).setValue(leader);
-
-    }
-*/
     private void saveNewTeam(Team team){
         team.teamcode = key;
         Map<String,Object> teamValues = team.toMap();

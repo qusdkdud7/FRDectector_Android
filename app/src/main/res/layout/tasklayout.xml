@@ -10,18 +10,36 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="19dp"
-        android:textSize="20dp"
-        android:text="TO DO LIST" />
+        android:text="TO DO LIST"
+        android:textSize="20dp" />
 
-    <LinearLayout
-        android:id="@+id/tasklist"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="15dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="50dp"
-        android:orientation="vertical">
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/todotext"
+        android:id="@+id/scrollView3"
+        android:layout_above="@+id/taskBtn">
 
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/taskLL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="15dp"
+            android:orientation="vertical">
+
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/taskBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:text="할일추가" />
+
 </RelativeLayout>
